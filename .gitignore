@@ -1,3 +1,4 @@
+*.openmote-cc2538
 *.a
 *.bin
 *.map

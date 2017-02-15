@@ -48,8 +48,7 @@ AUTOSTART_PROCESSES(&example_unicast_process);
 static void
 recv_uc(struct unicast_conn *c, const linkaddr_t *from)
 {
-  printf("unicast message received from %d.%d\n",
-	 from->u8[0], from->u8[1]);
+  printf("%s\n",(char *)packetbuf_dataptr());
 }
 /*---------------------------------------------------------------------------*/
 static void
@@ -83,8 +82,8 @@ PROCESS_THREAD(example_unicast_process, ev, data)
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
 
     packetbuf_copyfrom("Hello", 5);
-    addr.u8[0] = 1;
-    addr.u8[1] = 0;
+    addr.u8[0] = 0xed;
+    addr.u8[1] = 0x5e;
     if(!linkaddr_cmp(&addr, &linkaddr_node_addr)) {
       unicast_send(&uc, &addr);
     }
